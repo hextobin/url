@@ -4,18 +4,19 @@ class UrlsController < ApplicationController
   end
 
   def create
-    @url = Url.create(url_params)
+    @url = Url.new(url_params)
+    @url['newurl'] =  gen_hash(@url['oldurl'])
+    @url.save!
     redirect_to action: 'show', id: @url.id
   end
 
   def show
     @url = Url.find(params[:id])
-    # binding.pry
   end
 
   private
     def url_params
-      params.require(:url).permit(:oldurl, :id)
+      params.require(:url).permit(:oldurl)
     end
 
 end
