@@ -7,11 +7,16 @@ class UrlsController < ApplicationController
     @url = Url.new(url_params)
     @url['newurl'] =  gen_hash(@url['oldurl'])
     @url.save!
-    redirect_to action: 'show', id: @url.id
+    redirect_to action: 'redirecturl', id: @url.id
   end
 
   def show
     @url = Url.friendly.find(params[:id])
+    redirect_to "http://www.#{@url.oldurl}"
+  end
+  
+  def redirecturl
+    @url = Url.find(params[:id])
   end
 
   private
